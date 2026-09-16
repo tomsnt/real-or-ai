@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Real or AI</title>
+  <link rel="stylesheet" href="css/common.css" />
+  <style>
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2em;
+      max-width: 680px;
+      width: 100%;
+    }
+    @media (max-width: 620px) {
+      .choice-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .choice-card {
+      text-align: center;
+      padding: 2.2em 1.5em;
+      text-decoration: none;
+      display: block;
+    }
+    .choice-card .icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 0.4em;
+    }
+    .choice-card h2 {
+      color: var(--color-text);
+    }
+    .landing-title {
+      text-align: center;
+      margin-bottom: 1.5em;
+    }
+    .landing-title .brand {
+      font-size: 2.4rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="center-screen">
+    <div class="stack" style="align-items: center; width: 100%;">
+      <div class="landing-title">
+        <div class="brand">
+          <span class="dot-real">●</span> Real or <span class="dot-ai">AI</span>
+        </div>
+        <p>Il quiz multiplayer da giocare in classe</p>
+      </div>
+      <div class="choice-grid">
+        <a class="card choice-card" href="host.html">
+          <span class="icon">🖥️</span>
+          <h2>Sono l'Host</h2>
+          <p>Apri questa pagina sullo schermo grande / proiettore per creare e condurre la partita.</p>
+        </a>
+        <a class="card choice-card" href="player.html">
+          <span class="icon">📱</span>
+          <h2>Sono un Giocatore</h2>
+          <p>Apri questa pagina dal tuo telefono o iPad e inserisci il codice stanza per giocare.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

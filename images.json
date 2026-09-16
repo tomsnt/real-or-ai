@@ -1,0 +1,42 @@
+[
+  {
+    "file": "placeholder1.svg",
+    "isAI": false,
+    "note": "Segnaposto: sostituiscila con una tua FOTO REALE."
+  },
+  {
+    "file": "placeholder2.svg",
+    "isAI": false,
+    "note": "Segnaposto: sostituiscila con una tua FOTO REALE."
+  },
+  {
+    "file": "placeholder3.svg",
+    "isAI": false,
+    "note": "Segnaposto: sostituiscila con una tua FOTO REALE."
+  },
+  {
+    "file": "placeholder4.svg",
+    "isAI": false,
+    "note": "Segnaposto: sostituiscila con una tua FOTO REALE."
+  },
+  {
+    "file": "placeholder5.svg",
+    "isAI": true,
+    "note": "Segnaposto: sostituiscila con una tua immagine generata dall'IA."
+  },
+  {
+    "file": "placeholder6.svg",
+    "isAI": true,
+    "note": "Segnaposto: sostituiscila con una tua immagine generata dall'IA."
+  },
+  {
+    "file": "placeholder7.svg",
+    "isAI": true,
+    "note": "Segnaposto: sostituiscila con una tua immagine generata dall'IA."
+  },
+  {
+    "file": "placeholder8.svg",
+    "isAI": true,
+    "note": "Segnaposto: sostituiscila con una tua immagine generata dall'IA."
+  }
+]

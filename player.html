@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+  <title>Real or AI — Gioca</title>
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/player.css" />
+</head>
+<body class="player">
+  <div id="config-error" class="center-screen hidden">
+    <div class="card" style="max-width: 640px;">
+      <h2>⚠️ Configurazione Firebase mancante</h2>
+      <p>
+        Il file <code>firebase-config.js</code> contiene ancora i valori di
+        esempio. Chiedi all'host di completare la configurazione (vedi
+        README.md).
+      </p>
+    </div>
+  </div>
+
+  <div id="app" class="player-shell hidden">
+    <div class="player-topbar">
+      <a href="index.html" class="brand" style="text-decoration:none; font-size:1rem;">
+        <span class="dot-real">●</span> Real or <span class="dot-ai">AI</span>
+      </a>
+      <span id="player-score-chip" class="player-score hidden">0 pt</span>
+    </div>
+
+    <div id="global-error" class="error-banner hidden"></div>
+
+    <!-- ============ STEP 1: CODICE STANZA ============ -->
+    <section id="screen-code" class="join-form center-screen" style="flex:1;">
+      <div class="card stack">
+        <h1>🎮 Unisciti</h1>
+        <div>
+          <span class="field-label">Codice stanza</span>
+          <input type="text" id="room-code-input" maxlength="4" placeholder="ABCD" autocomplete="off" autocapitalize="characters" />
+        </div>
+        <button type="button" id="code-continue-btn">Continua</button>
+        <div id="code-error" class="error-banner hidden"></div>
+      </div>
+    </section>
+
+    <!-- ============ STEP 2: NICKNAME + SQUADRA ============ -->
+    <section id="screen-join" class="join-form center-screen hidden" style="flex:1;">
+      <div class="card stack">
+        <h1>Ciao! 👋</h1>
+        <div>
+          <span class="field-label">Il tuo nome</span>
+          <input type="text" id="nickname-input" maxlength="20" placeholder="Es. Marco" autocomplete="off" />
+        </div>
+        <div id="team-picker-wrap" class="hidden stack">
+          <span class="field-label">Scegli la tua squadra</span>
+          <div class="team-picker" id="team-picker"></div>
+          <div id="new-team-wrap" class="hidden">
+            <span class="field-label">…oppure crea una nuova squadra</span>
+            <div class="row">
+              <input type="text" id="new-team-input" maxlength="20" placeholder="Nome squadra" style="flex:1;" />
+              <button type="button" id="new-team-btn" class="secondary">Crea</button>
+            </div>
+          </div>
+        </div>
+        <button type="button" id="join-btn">Entra in partita 🚀</button>
+        <button type="button" id="back-btn" class="secondary">Indietro</button>
+        <div id="join-error" class="error-banner hidden"></div>
+      </div>
+    </section>
+
+    <!-- ============ IN ATTESA ============ -->
+    <section id="screen-waiting" class="waiting-screen hidden">
+      <div class="big-emoji">👀</div>
+      <h2>Guarda lo schermo grande!</h2>
+      <p id="waiting-subtext">In attesa che l'host inizi la partita…</p>
+    </section>
+
+    <!-- ============ VOTO ============ -->
+    <section id="screen-vote" class="vote-screen hidden">
+      <div class="vote-timer">Tempo: <strong id="vote-timer">--</strong>s</div>
+      <div class="vote-buttons">
+        <button type="button" class="vote-btn real" id="vote-real-btn">
+          <span class="emoji">📷</span>
+          <span>È REALE</span>
+        </button>
+        <button type="button" class="vote-btn ai" id="vote-ai-btn">
+          <span class="emoji">🤖</span>
+          <span>È AI</span>
+        </button>
+      </div>
+      <div class="vote-status" id="vote-status"></div>
+    </section>
+
+    <!-- ============ FEEDBACK ============ -->
+    <section id="screen-feedback" class="hidden" style="flex:1; display:flex;">
+      <div class="feedback-screen" id="feedback-box">
+        <div class="feedback-icon" id="feedback-icon">✅</div>
+        <h2 id="feedback-title">Giusto!</h2>
+        <div class="feedback-points" id="feedback-points">+100 punti</div>
+        <div class="player-score" id="feedback-total-score">Totale: 0 pt</div>
+      </div>
+    </section>
+
+    <!-- ============ FINALE ============ -->
+    <section id="screen-final" class="final-screen hidden">
+      <div class="final-rank" id="final-rank">🥇</div>
+      <h1>Partita finita!</h1>
+      <p id="final-summary">Hai totalizzato 0 punti.</p>
+    </section>
+  </div>
+
+  <script type="module" src="js/player.js"></script>
+</body>
+</html>

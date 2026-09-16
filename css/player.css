@@ -1,0 +1,240 @@
+body.player {
+  overscroll-behavior: none;
+}
+
+.player-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1.2em;
+  gap: 1em;
+}
+
+.player-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.player-score {
+  font-size: 1.1rem;
+  font-weight: 800;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.4em 1em;
+}
+
+.join-form {
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.join-form h1 {
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.join-form .field-label {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.3em;
+}
+
+.join-form input,
+.join-form select {
+  width: 100%;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+#room-code-input {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 800;
+}
+
+.join-form button {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 1em;
+}
+
+.team-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+
+.team-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 1.2em;
+  border-radius: var(--radius);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface-2);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.team-option input[type="radio"] {
+  width: 1.4em;
+  height: 1.4em;
+}
+
+.waiting-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2em;
+  text-align: center;
+}
+
+.waiting-screen .big-emoji {
+  font-size: 4rem;
+}
+
+.waiting-screen h2 {
+  font-size: 1.6rem;
+}
+
+.vote-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.vote-timer {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-text-dim);
+}
+
+.vote-timer strong {
+  color: var(--color-accent);
+}
+
+.vote-buttons {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.vote-btn {
+  flex: 1;
+  min-height: 38vh;
+  border-radius: var(--radius-lg);
+  font-size: 2.2rem;
+  font-weight: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
+  border: 4px solid transparent;
+  color: white;
+  transition: transform 0.1s ease, border-color 0.15s ease;
+}
+
+.vote-btn .emoji {
+  font-size: 2.8rem;
+}
+
+.vote-btn.real {
+  background: var(--color-real);
+}
+
+.vote-btn.ai {
+  background: var(--color-ai);
+}
+
+.vote-btn:active {
+  transform: scale(0.97);
+}
+
+.vote-btn.selected {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25);
+}
+
+.vote-status {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-text-dim);
+  min-height: 1.5em;
+}
+
+.vote-status.submitted {
+  color: var(--color-success);
+}
+
+.feedback-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8em;
+  text-align: center;
+  border-radius: var(--radius-lg);
+  padding: 2em;
+  animation: pop 0.3s ease;
+}
+
+.feedback-screen.correct {
+  background: rgba(22, 163, 74, 0.15);
+  border: 2px solid var(--color-success);
+}
+
+.feedback-screen.wrong {
+  background: rgba(220, 38, 38, 0.15);
+  border: 2px solid var(--color-error);
+}
+
+.feedback-screen .feedback-icon {
+  font-size: 3.5rem;
+}
+
+.feedback-screen h2 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.feedback-points {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-accent);
+}
+
+.final-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  text-align: center;
+}
+
+.final-rank {
+  font-size: 3rem;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

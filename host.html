@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Real or AI — Host</title>
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/host.css" />
+</head>
+<body class="host">
+  <div id="config-error" class="center-screen hidden">
+    <div class="card" style="max-width: 640px;">
+      <h2>⚠️ Configurazione Firebase mancante</h2>
+      <p>
+        Il file <code>firebase-config.js</code> contiene ancora i valori di
+        esempio. Apri quel file e incolla la configurazione del tuo progetto
+        Firebase (vedi il <strong>README.md</strong>, sezione "Configurazione
+        Firebase").
+      </p>
+    </div>
+  </div>
+
+  <div id="app" class="host-shell hidden">
+    <div class="host-topbar">
+      <a href="index.html" class="brand" style="text-decoration:none;">
+        <span class="dot-real">●</span> Real or <span class="dot-ai">AI</span>
+      </a>
+      <div class="row">
+        <span id="topbar-status" class="badge">—</span>
+        <span id="topbar-code" class="room-code-chip hidden"></span>
+      </div>
+    </div>
+
+    <div id="connection-banner" class="error-banner hidden"></div>
+
+    <div class="host-screen">
+      <!-- ============ LOBBY ============ -->
+      <section id="screen-lobby" class="hidden stack">
+        <div class="lobby-grid">
+          <div class="card join-panel">
+            <h2>Unisciti alla partita</h2>
+            <div class="room-code-big" id="lobby-room-code">----</div>
+            <div id="qrcode-container"></div>
+            <div class="join-url" id="lobby-join-url">—</div>
+            <p style="margin-top:1em;">Inquadra il QR o vai sull'indirizzo qui sopra dal tuo iPad/telefono.</p>
+          </div>
+
+          <div class="card settings-panel stack">
+            <h2>Impostazioni partita</h2>
+
+            <div>
+              <span class="field-label">Modalità</span>
+              <div class="mode-toggle">
+                <button type="button" id="mode-individual" class="active">👤 Individuale</button>
+                <button type="button" id="mode-teams">👥 A Squadre</button>
+              </div>
+            </div>
+
+            <div id="teams-config" class="stack hidden">
+              <div>
+                <span class="field-label">Chi decide i nomi delle squadre?</span>
+                <div class="mode-toggle">
+                  <button type="button" id="teams-fixed" class="active">L'host</button>
+                  <button type="button" id="teams-dynamic">I giocatori</button>
+                </div>
+              </div>
+              <div>
+                <span class="field-label">Numero massimo di squadre (2-6)</span>
+                <input type="number" id="max-teams" min="2" max="6" value="4" />
+              </div>
+              <div id="fixed-team-names-wrap">
+                <span class="field-label">Nomi squadre (una per riga)</span>
+                <textarea id="fixed-team-names" rows="4" placeholder="Squadra 1&#10;Squadra 2&#10;Squadra 3&#10;Squadra 4" style="width:100%; font-family:inherit; font-size:1rem; padding:0.8em; border-radius:14px; border:1px solid var(--color-border); background:var(--color-surface-2); color:var(--color-text);"></textarea>
+                <button type="button" id="save-team-names" class="secondary" style="margin-top:0.6em;">Salva squadre</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div style="flex:1;">
+                <span class="field-label">Durata round (secondi)</span>
+                <input type="number" id="round-duration" min="5" max="120" value="20" style="width:100%;" />
+              </div>
+              <div style="flex:1;">
+                <span class="field-label">Numero di round</span>
+                <select id="round-count-mode" style="width:100%;">
+                  <option value="all">Usa tutte le immagini</option>
+                  <option value="fixed">Numero fisso</option>
+                </select>
+              </div>
+            </div>
+            <div id="round-count-fixed-wrap" class="hidden">
+              <span class="field-label">Quanti round?</span>
+              <input type="number" id="round-count-fixed" min="1" max="50" value="8" />
+            </div>
+
+            <div class="roster-panel">
+              <span class="field-label">Partecipanti collegati</span>
+              <div id="roster-list" class="roster-list">
+                <span class="badge">Nessuno ancora…</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="start-bar">
+          <button type="button" id="start-game-btn">▶ Inizia partita</button>
+        </div>
+        <div id="lobby-error" class="error-banner hidden" style="max-width:680px; margin:0 auto;"></div>
+      </section>
+
+      <!-- ============ ROUND ACTIVE ============ -->
+      <section id="screen-round" class="hidden stack">
+        <div class="round-header">
+          <span id="round-label">Round 1</span>
+          <div class="timer-ring-wrap">
+            <span class="timer-number" id="round-timer">20</span>
+          </div>
+          <span id="round-mode-label">—</span>
+        </div>
+        <div class="image-stage">
+          <img id="round-image" src="" alt="Immagine del round" />
+        </div>
+        <div class="votes-progress">
+          <strong id="votes-count">0</strong>/<span id="votes-total">0</span> hanno votato
+        </div>
+        <div class="round-controls">
+          <button type="button" id="reveal-now-btn">👁️ Rivela ora</button>
+        </div>
+      </section>
+
+      <!-- ============ REVEAL ============ -->
+      <section id="screen-reveal" class="hidden stack">
+        <div class="round-header">
+          <span id="reveal-round-label">Round 1</span>
+        </div>
+        <div class="image-stage">
+          <img id="reveal-image" src="" alt="Immagine del round" />
+          <div id="reveal-badge" class="reveal-badge real">REALE</div>
+        </div>
+        <div class="reveal-note" id="reveal-note"></div>
+        <div class="reveal-stats" id="reveal-stats">0/0 hanno indovinato</div>
+        <h3 style="text-align:center;">Classifica</h3>
+        <div class="leaderboard" id="reveal-leaderboard"></div>
+        <div class="round-controls">
+          <button type="button" id="next-round-btn">Prossima immagine ▶</button>
+        </div>
+      </section>
+
+      <!-- ============ FINAL ============ -->
+      <section id="screen-final" class="hidden stack">
+        <h1 style="text-align:center;">🏆 Classifica finale</h1>
+        <div class="podium" id="final-podium"></div>
+        <div class="leaderboard" id="final-leaderboard"></div>
+        <div class="round-controls">
+          <button type="button" id="new-game-btn" class="secondary">Nuova partita (stessa stanza)</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script type="module" src="js/host.js"></script>
+</body>
+</html>
