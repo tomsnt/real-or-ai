@@ -578,6 +578,18 @@ function renderLeaderboard(container) {
   });
 }
 
+async function endGameNow() {
+  if (!confirm("Terminare la partita adesso e passare alla classifica finale?")) {
+    return;
+  }
+  stopTimerLoop();
+  await update(ref(db, roomPath(ROOM_CODE)), { status: "final" });
+  await touchActivity();
+}
+
+el("end-game-btn-round").addEventListener("click", endGameNow);
+el("end-game-btn-reveal").addEventListener("click", endGameNow);
+
 el("next-round-btn").addEventListener("click", async () => {
   const total = roomState.imageOrder.length;
   const nextIdx = roomState.currentRoundIndex + 1;
