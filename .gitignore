@@ -2,3 +2,7 @@
 *.log
 .vscode/
 node_modules/
+
+# Generato da scripts/generate-manifest.js (in CI ad ogni deploy);
+# per testare in locale, rilancialo tu con `node scripts/generate-manifest.js`.
+images/manifest.json

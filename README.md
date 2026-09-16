@@ -151,12 +151,15 @@ commit pronto. Tu devi solo collegarlo al tuo account GitHub.
 
 4. **Attiva GitHub Pages**:
    - Nel repository su GitHub, vai su **Settings → Pages**.
-   - Sotto "Build and deployment" → "Source", scegli **"Deploy from a
-     branch"**.
-   - Come branch scegli **`main`** e cartella **`/ (root)`**, poi
-     **Save**.
-   - Dopo circa un minuto, GitHub mostrerà l'URL pubblico del sito, del
-     tipo:
+   - Sotto "Build and deployment" → "Source", scegli **"GitHub Actions"**
+     (non "Deploy from a branch": il progetto include già un workflow in
+     `.github/workflows/deploy.yml` che pubblica il sito e allo stesso
+     tempo tiene aggiornato l'elenco delle immagini in `images/real/` e
+     `images/fake/`).
+   - Ad ogni `git push` su `main`, il sito si ripubblica da solo (ci
+     mette circa un minuto: puoi seguirlo dalla tab **Actions** del
+     repository). Dopo il primo push, GitHub mostrerà l'URL pubblico del
+     sito, del tipo:
 
      ```
      https://TUO-UTENTE.github.io/real-or-ai/
@@ -196,8 +199,9 @@ gratuito in seguito se vuoi poter aggiornare lo stesso sito più volte).
 
 Niente file da modificare a mano: il gioco pesca i contenuti direttamente
 da due cartelle, **`images/real/`** (foto/video veri) e **`images/fake/`**
-(foto/video generati dall'IA). All'apertura di `host.html`, il gioco
-"annusa" da solo cosa c'è dentro ciascuna cartella.
+(foto/video generati dall'IA), con **qualsiasi nome di file** — non serve
+numerarli né seguire nessun ordine. Ad ogni partita l'ordine in cui
+vengono mostrati è comunque sempre mescolato a caso, senza ripetizioni.
 
 Il progetto include già un primo set di partenza: 10 foto reali in
 `images/real/` (headshot con licenza aperta da Wikimedia Commons, crediti
@@ -210,22 +214,24 @@ Per aggiungere (o sostituire del tutto) i contenuti:
 
 1. Vai nella cartella `images/real/` per i contenuti veri, o
    `images/fake/` per quelli generati dall'IA.
-2. Copia lì dentro i tuoi file **numerandoli in ordine, a partire da 1**:
-   `1.jpg`, `2.jpg`, `3.png`, `4.mp4`, `5.webm`, ecc. (formati supportati:
-   jpg/jpeg/png/webp/gif per le foto, mp4/webm/mov per i video). Il numero
-   è solo un nome file: non conta l'ordine in cui appaiono in partita,
-   che viene sempre mescolato a caso.
+2. Copia lì dentro i tuoi file, con il nome che vuoi (formati supportati:
+   jpg/jpeg/png/webp/gif per le foto, mp4/webm/mov per i video).
 3. Puoi cancellare pure tutti quelli inclusi di default e mettere solo i
-   tuoi: basta che restino numerati senza troppi "buchi" consecutivi
-   (va benissimo saltare un numero ogni tanto, ma se lasci 3 numeri di
-   fila vuoti il gioco si ferma lì pensando che la cartella sia finita).
-4. Ricorda di caricare anche i nuovi file quando pubblichi il sito
-   (con `git add`/`git push`, oppure ritrascinando la cartella su
-   Netlify Drop).
+   tuoi.
+4. Fai `git add`/`git commit`/`git push` come al solito (o ritrascina la
+   cartella su Netlify Drop). Se pubblichi su GitHub Pages, un workflow
+   automatico (`.github/workflows/deploy.yml`) si occupa da solo di
+   "fare l'inventario" di cosa c'è nelle due cartelle appena fai push:
+   non devi aggiornare nessun elenco a mano.
 
 **Attenzione al copyright**: se aggiungi foto/video trovati online,
 assicurati di averne il diritto d'uso (licenza libera, oppure materiale
 tuo). Non pubblicare contenuti protetti senza permesso.
+
+**Nota per Netlify Drop**: quel metodo di pubblicazione non esegue il
+workflow automatico (è solo per GitHub Pages). Se usi Netlify Drop, prima
+di trascinare la cartella lancia tu `node scripts/generate-manifest.js`
+dal terminale, per rigenerare `images/manifest.json` con i tuoi file.
 
 ---
 
@@ -238,8 +244,13 @@ RealOrAI/
 ├── player.html             Pagina giocatore (mobile/iPad)
 ├── firebase-config.js       ⚠️ L'UNICO file da modificare (chiavi Firebase)
 ├── images/
-│   ├── real/                    Foto/video VERI (numerati 1, 2, 3, ...)
-│   └── fake/                    Foto/video generati dall'IA (numerati 1, 2, 3, ...)
+│   ├── real/                    Foto/video VERI (qualsiasi nome file)
+│   ├── fake/                    Foto/video generati dall'IA (qualsiasi nome file)
+│   └── manifest.json          ⚙️ Generato in automatico, non modificarlo a mano
+├── scripts/
+│   └── generate-manifest.js    Genera images/manifest.json da real/ e fake/
+├── .github/workflows/
+│   └── deploy.yml               Pubblica su GitHub Pages rigenerando il manifest
 ├── css/
 │   ├── common.css             Stili condivisi
 │   ├── host.css                Stili schermo host (alto contrasto)
@@ -308,17 +319,22 @@ In quel caso usa comunque l'indirizzo testuale mostrato subito sotto nella
 pagina host.
 
 **Voglio provare in locale prima di pubblicare.**
-Puoi aprire `host.html`/`player.html` direttamente con doppio click in
-molti browser, ma per cercare le foto/video dentro `images/real/` e
-`images/fake/` alcuni browser richiedono che i file vengano serviti da un
-piccolo server locale (non serve installare nulla: il Mac ha già Python).
-Dalla cartella del progetto:
+Prima genera l'elenco delle immagini (lo fa da solo GitHub Actions quando
+pubblichi, ma in locale va lanciato a mano — richiede
+[Node.js](https://nodejs.org) installato):
+
+```bash
+node scripts/generate-manifest.js
+```
+
+Poi avvia un piccolo server locale (non serve installare nulla, il Mac ha
+già Python) dalla cartella del progetto:
 
 ```bash
 python3 -m http.server 8080
 ```
 
-e poi apri `http://localhost:8080/host.html`. Questo è solo un comodo
+e apri `http://localhost:8080/host.html`. Questo è solo un comodo
 strumento di test: **non è necessario per giocare davvero**, che avviene
 sempre tramite l'URL pubblico ottenuto da GitHub Pages o Netlify Drop.
 

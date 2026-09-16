@@ -40,64 +40,17 @@ let timerInterval = null;
 let lastRenderedStatus = null;
 
 // ---------------------------------------------------------------------------
-// Scoperta contenuti: legge tutto quello che trova nelle cartelle
-// images/real/ e images/fake/, senza bisogno di un elenco scritto a mano.
-// Basta numerare i file in ordine (1, 2, 3, ...): jpg/jpeg/png/webp/gif
-// per le foto, mp4/webm/mov per i video.
+// Scoperta contenuti: images/manifest.json elenca tutto quello che c'è
+// davvero dentro images/real/ e images/fake/ (qualsiasi nome di file).
+// Viene rigenerato automaticamente ad ogni pubblicazione da
+// .github/workflows/deploy.yml (script: scripts/generate-manifest.js):
+// tu ti limiti a copiare i file nelle due cartelle e a fare push.
 // ---------------------------------------------------------------------------
 
-const MEDIA_EXTENSIONS = [
-  ["jpg", "image"],
-  ["jpeg", "image"],
-  ["png", "image"],
-  ["webp", "image"],
-  ["gif", "image"],
-  ["mp4", "video"],
-  ["webm", "video"],
-  ["mov", "video"],
-];
-const MEDIA_SCAN_MAX_INDEX = 300;
-const MEDIA_SCAN_MAX_MISSES = 3;
-
-async function urlExists(url) {
-  try {
-    const res = await fetch(url, { method: "HEAD", cache: "no-store" });
-    return res.ok;
-  } catch {
-    return false;
-  }
-}
-
-async function probeIndex(folder, index) {
-  const checks = MEDIA_EXTENSIONS.map(async ([ext, type]) => {
-    const file = `${folder}/${index}.${ext}`;
-    return (await urlExists(`images/${file}`)) ? { file, type } : null;
-  });
-  const results = await Promise.all(checks);
-  return results.find((r) => r) || null;
-}
-
-async function scanFolder(folder, isAI) {
-  const found = [];
-  let misses = 0;
-  for (let i = 1; i <= MEDIA_SCAN_MAX_INDEX && misses < MEDIA_SCAN_MAX_MISSES; i++) {
-    const hit = await probeIndex(folder, i);
-    if (hit) {
-      found.push({ file: hit.file, type: hit.type, isAI });
-      misses = 0;
-    } else {
-      misses++;
-    }
-  }
-  return found;
-}
-
 async function loadAllMedia() {
-  const [real, fake] = await Promise.all([
-    scanFolder("real", false),
-    scanFolder("fake", true),
-  ]);
-  return [...real, ...fake];
+  const res = await fetch("images/manifest.json", { cache: "no-store" });
+  if (!res.ok) return [];
+  return res.json();
 }
 
 // ---------------------------------------------------------------------------
