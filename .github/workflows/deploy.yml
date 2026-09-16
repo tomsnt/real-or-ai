@@ -24,6 +24,10 @@ jobs:
           node-version: 20
       - name: Generate images/manifest.json from images/real and images/fake
         run: node scripts/generate-manifest.js
+      - name: Bust cache on CSS/JS (so browsers stop serving the old version after each deploy)
+        run: |
+          grep -rlZ '__CACHEBUST__' --include='*.html' --include='*.js' . \
+            | xargs -0 sed -i "s/__CACHEBUST__/${GITHUB_SHA}/g"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

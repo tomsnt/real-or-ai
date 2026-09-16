@@ -7,7 +7,7 @@ import {
   update,
   onValue,
   onDisconnect,
-} from "./firebase-init.js";
+} from "./firebase-init.js?v=__CACHEBUST__";
 import {
   roomRef,
   roomPath,
@@ -16,8 +16,8 @@ import {
   randomToken,
   saveHostSession,
   loadHostSession,
-} from "./room.js";
-import { computePoints, rankEntities } from "./scoring.js";
+} from "./room.js?v=__CACHEBUST__";
+import { computePoints, rankEntities } from "./scoring.js?v=__CACHEBUST__";
 
 // ---------------------------------------------------------------------------
 // Setup / config check

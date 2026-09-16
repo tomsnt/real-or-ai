@@ -8,7 +8,7 @@ import {
   onValue,
   onDisconnect,
   push,
-} from "./firebase-init.js";
+} from "./firebase-init.js?v=__CACHEBUST__";
 import {
   roomRef,
   roomPath,
@@ -16,8 +16,8 @@ import {
   savePlayerSession,
   loadPlayerSession,
   clearPlayerSession,
-} from "./room.js";
-import { rankEntities } from "./scoring.js";
+} from "./room.js?v=__CACHEBUST__";
+import { rankEntities } from "./scoring.js?v=__CACHEBUST__";
 
 // ---------------------------------------------------------------------------
 // Setup / config check

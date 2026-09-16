@@ -1,7 +1,7 @@
 // Inizializzazione Firebase (App + Realtime Database) via CDN ESM.
 // Nessuna installazione richiesta: tutto viene caricato dal browser.
 
-import { firebaseConfig } from "../firebase-config.js";
+import { firebaseConfig } from "../firebase-config.js?v=__CACHEBUST__";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
 import {
   getDatabase,
