@@ -1,42 +1,122 @@
 [
   {
-    "file": "placeholder1.svg",
+    "file": "real_01.jpg",
     "isAI": false,
-    "note": "Segnaposto: sostituiscila con una tua FOTO REALE."
+    "note": "Foto reale.",
+    "credit": "Foto di Alexroessner — CC BY-SA 4.0 — Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Alex_Roessner_Headshot_2022.jpg"
   },
   {
-    "file": "placeholder2.svg",
+    "file": "real_02.jpg",
     "isAI": false,
-    "note": "Segnaposto: sostituiscila con una tua FOTO REALE."
+    "note": "Foto reale.",
+    "credit": "Foto di Alexturvy — CC0 — Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Alex_Turvy_Headshot.jpg"
   },
   {
-    "file": "placeholder3.svg",
+    "file": "real_03.jpg",
     "isAI": false,
-    "note": "Segnaposto: sostituiscila con una tua FOTO REALE."
+    "note": "Foto reale.",
+    "credit": "Foto di Kermitgal — CC BY 4.0 — Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Alyson_Leigh_Rosenfeld_-_Headshot_1.jpg"
   },
   {
-    "file": "placeholder4.svg",
+    "file": "real_04.jpg",
     "isAI": false,
-    "note": "Segnaposto: sostituiscila con una tua FOTO REALE."
+    "note": "Foto reale.",
+    "credit": "Foto di Ahvarma10 — CC BY 4.0 — Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Amit_H_Varma_Purdue_2026.jpg"
   },
   {
-    "file": "placeholder5.svg",
-    "isAI": true,
-    "note": "Segnaposto: sostituiscila con una tua immagine generata dall'IA."
+    "file": "real_05.jpg",
+    "isAI": false,
+    "note": "Foto reale.",
+    "credit": "Foto di CedarsToMaple — CC BY-SA 4.0 — Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Antoine-Tayar-Profile-Photo.jpg"
   },
   {
-    "file": "placeholder6.svg",
-    "isAI": true,
-    "note": "Segnaposto: sostituiscila con una tua immagine generata dall'IA."
+    "file": "real_06.jpg",
+    "isAI": false,
+    "note": "Foto reale.",
+    "credit": "Foto di Brian.w.pogue — CC0 — Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Brian_Pogue_SPIE_Board_Member_2025.jpg"
   },
   {
-    "file": "placeholder7.svg",
-    "isAI": true,
-    "note": "Segnaposto: sostituiscila con una tua immagine generata dall'IA."
+    "file": "real_07.jpg",
+    "isAI": false,
+    "note": "Foto reale.",
+    "credit": "Foto di Checkcheggers — CC BY-SA 4.0 — Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chris_Johnson_Photo.jpg"
   },
   {
-    "file": "placeholder8.svg",
+    "file": "real_08.jpg",
+    "isAI": false,
+    "note": "Foto reale.",
+    "credit": "Foto di Nina Wurtzel — CC0 — Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cori_Gardner.jpg"
+  },
+  {
+    "file": "real_09.jpg",
+    "isAI": false,
+    "note": "Foto reale.",
+    "credit": "Foto di Tawfiqaziz — CC BY 4.0 — Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dug_Song_-_20260129.jpg"
+  },
+  {
+    "file": "real_10.jpg",
+    "isAI": false,
+    "note": "Foto reale.",
+    "credit": "Foto di JohnConchubhar — CC BY-SA 4.0 — Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:EamonK_Headshot.jpg"
+  },
+  {
+    "file": "ai_01.jpg",
     "isAI": true,
-    "note": "Segnaposto: sostituiscila con una tua immagine generata dall'IA."
+    "note": "Volto generato dall'IA (StyleGAN2) — questa persona non esiste."
+  },
+  {
+    "file": "ai_02.jpg",
+    "isAI": true,
+    "note": "Volto generato dall'IA (StyleGAN2) — questa persona non esiste."
+  },
+  {
+    "file": "ai_03.jpg",
+    "isAI": true,
+    "note": "Volto generato dall'IA (StyleGAN2) — questa persona non esiste."
+  },
+  {
+    "file": "ai_04.jpg",
+    "isAI": true,
+    "note": "Volto generato dall'IA (StyleGAN2) — questa persona non esiste."
+  },
+  {
+    "file": "ai_05.jpg",
+    "isAI": true,
+    "note": "Volto generato dall'IA (StyleGAN2) — questa persona non esiste."
+  },
+  {
+    "file": "ai_06.jpg",
+    "isAI": true,
+    "note": "Volto generato dall'IA (StyleGAN2) — questa persona non esiste."
+  },
+  {
+    "file": "ai_07.jpg",
+    "isAI": true,
+    "note": "Volto generato dall'IA (StyleGAN2) — questa persona non esiste."
+  },
+  {
+    "file": "ai_08.jpg",
+    "isAI": true,
+    "note": "Volto generato dall'IA (StyleGAN2) — questa persona non esiste."
+  },
+  {
+    "file": "ai_09.jpg",
+    "isAI": true,
+    "note": "Volto generato dall'IA (StyleGAN2) — questa persona non esiste."
+  },
+  {
+    "file": "ai_10.jpg",
+    "isAI": true,
+    "note": "Volto generato dall'IA (StyleGAN2) — questa persona non esiste."
   }
 ]

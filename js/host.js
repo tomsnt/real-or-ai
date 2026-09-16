@@ -402,6 +402,28 @@ function currentImage() {
   return IMAGES[idx];
 }
 
+// Sostituisce l'elemento <img>/<video> mantenendo lo stesso id, per
+// supportare sia foto che clip video nello stesso "palco".
+function setStageMedia(id, item) {
+  const isVideo = item.type === "video";
+  const old = el(id);
+  if ((isVideo && old.tagName !== "VIDEO") || (!isVideo && old.tagName !== "IMG")) {
+    const next = document.createElement(isVideo ? "video" : "img");
+    next.id = id;
+    if (isVideo) {
+      next.autoplay = true;
+      next.loop = true;
+      next.muted = true;
+      next.playsInline = true;
+    } else {
+      next.alt = "Immagine del round";
+    }
+    old.replaceWith(next);
+  }
+  el(id).src = `images/${item.file}`;
+  if (isVideo) el(id).load();
+}
+
 function renderRoundActive() {
   const total = roomState.imageOrder.length;
   el("round-label").textContent = `Round ${roomState.currentRoundIndex + 1} di ${total}`;
@@ -409,7 +431,7 @@ function renderRoundActive() {
     roomState.settings.mode === "teams" ? "👥 A Squadre" : "👤 Individuale";
 
   const img = currentImage();
-  el("round-image").src = `images/${img.file}`;
+  setStageMedia("round-image", img);
 
   const entities = roomState.entities || {};
   const totalEntities = Object.keys(entities).length;
@@ -499,11 +521,14 @@ function renderReveal() {
   el("reveal-round-label").textContent = `Round ${roomState.currentRoundIndex + 1} di ${total}`;
 
   const img = currentImage();
-  el("reveal-image").src = `images/${img.file}`;
+  setStageMedia("reveal-image", img);
   const badge = el("reveal-badge");
   badge.textContent = img.isAI ? "IMMAGINE AI" : "FOTO REALE";
   badge.className = "reveal-badge " + (img.isAI ? "ai" : "real");
   el("reveal-note").textContent = img.note || "";
+  const creditEl = el("reveal-credit");
+  creditEl.textContent = img.credit || "";
+  creditEl.classList.toggle("hidden", !img.credit);
 
   const results =
     (roomState.rounds &&
@@ -552,8 +577,23 @@ el("next-round-btn").addEventListener("click", async () => {
 // FINAL
 // ---------------------------------------------------------------------------
 
+let victoryShownFor = null;
+
 function renderFinal() {
   const ranked = rankEntities(roomState.entities);
+  const isTeams = roomState.settings.mode === "teams";
+
+  el("final-victory").classList.toggle("hidden", !isTeams);
+  el("final-title").classList.toggle("hidden", isTeams);
+
+  if (isTeams && ranked.length) {
+    el("victory-team-name").textContent = ranked[0].name;
+    if (victoryShownFor !== ROOM_CODE + roomState.currentRoundIndex) {
+      victoryShownFor = ROOM_CODE + roomState.currentRoundIndex;
+      spawnConfetti();
+    }
+  }
+
   const podium = el("final-podium");
   podium.innerHTML = "";
   const medals = ["🥇", "🥈", "🥉"];
@@ -567,7 +607,23 @@ function renderFinal() {
   renderLeaderboard(el("final-leaderboard"));
 }
 
+function spawnConfetti() {
+  const field = el("victory-confetti");
+  field.innerHTML = "";
+  const colors = ["#fbbf24", "#f59e0b", "#38bdf8", "#a78bfa", "#34d399", "#fb7185"];
+  for (let i = 0; i < 40; i++) {
+    const piece = document.createElement("span");
+    piece.className = "confetti-piece";
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.background = colors[i % colors.length];
+    piece.style.animationDuration = `${1.2 + Math.random() * 1.2}s`;
+    piece.style.animationDelay = `${Math.random() * 0.4}s`;
+    field.appendChild(piece);
+  }
+}
+
 el("new-game-btn").addEventListener("click", async () => {
+  victoryShownFor = null;
   const entities = roomState.entities || {};
   const resetEntities = {};
   Object.keys(entities).forEach((id) => {

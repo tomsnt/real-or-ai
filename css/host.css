@@ -211,7 +211,8 @@ body.host {
   border: 2px solid var(--color-border);
 }
 
-.image-stage img {
+.image-stage img,
+.image-stage video {
   max-width: 100%;
   max-height: 72vh;
   object-fit: contain;
@@ -276,6 +277,13 @@ body.host {
   font-size: 1.15rem;
   font-style: italic;
   color: var(--color-text-dim);
+}
+
+.reveal-credit {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-dim);
+  opacity: 0.7;
 }
 
 .reveal-stats {
@@ -365,4 +373,62 @@ body.host {
 
 .podium-medal {
   font-size: 2.5rem;
+}
+
+/* ---- VICTORY BANNER (modalità a squadre) ---- */
+.victory-banner {
+  position: relative;
+  text-align: center;
+  padding: 2.5em 1em 2em;
+  overflow: hidden;
+}
+
+.victory-trophy {
+  font-size: 5rem;
+  line-height: 1;
+  animation: victory-pop 0.6s ease;
+}
+
+.victory-team {
+  font-size: 2.6rem;
+  font-weight: 900;
+  margin-top: 0.3em;
+  background: linear-gradient(160deg, #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.victory-sub {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-text-dim, #94a3b8);
+  margin-top: 0.2em;
+}
+
+@keyframes victory-pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.confetti-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  width: 10px;
+  height: 14px;
+  opacity: 0.9;
+  animation: confetti-fall linear forwards;
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(220px) rotate(540deg); opacity: 0; }
 }

@@ -81,7 +81,7 @@
                 <input type="number" id="round-duration" min="5" max="120" value="20" style="width:100%;" />
               </div>
               <div style="flex:1;">
-                <span class="field-label">Numero di round</span>
+                <span class="field-label">Numero di domande</span>
                 <select id="round-count-mode" style="width:100%;">
                   <option value="all">Usa tutte le immagini</option>
                   <option value="fixed">Numero fisso</option>
@@ -89,7 +89,7 @@
               </div>
             </div>
             <div id="round-count-fixed-wrap" class="hidden">
-              <span class="field-label">Quanti round?</span>
+              <span class="field-label">Quante domande?</span>
               <input type="number" id="round-count-fixed" min="1" max="50" value="8" />
             </div>
 
@@ -138,6 +138,7 @@
           <div id="reveal-badge" class="reveal-badge real">REALE</div>
         </div>
         <div class="reveal-note" id="reveal-note"></div>
+        <div class="reveal-credit" id="reveal-credit"></div>
         <div class="reveal-stats" id="reveal-stats">0/0 hanno indovinato</div>
         <h3 style="text-align:center;">Classifica</h3>
         <div class="leaderboard" id="reveal-leaderboard"></div>
@@ -148,7 +149,13 @@
 
       <!-- ============ FINAL ============ -->
       <section id="screen-final" class="hidden stack">
-        <h1 style="text-align:center;">🏆 Classifica finale</h1>
+        <div id="final-victory" class="victory-banner hidden">
+          <div id="victory-confetti" class="confetti-field"></div>
+          <div class="victory-trophy">🏆</div>
+          <div class="victory-team" id="victory-team-name">—</div>
+          <div class="victory-sub">ha vinto la partita!</div>
+        </div>
+        <h1 id="final-title" style="text-align:center;">🏆 Classifica finale</h1>
         <div class="podium" id="final-podium"></div>
         <div class="leaderboard" id="final-leaderboard"></div>
         <div class="round-controls">

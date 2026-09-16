@@ -194,28 +194,57 @@ gratuito in seguito se vuoi poter aggiornare lo stesso sito più volte).
 
 ## Sostituire le immagini
 
-Nel progetto trovi 8 immagini segnaposto colorate in `images/` (etichettate
-"FOTO REALE" o "IMMAGINE AI") e il file **`images.json`** che le descrive:
+Il progetto include già un primo set di partenza in `images/`: 10 foto
+reali (`real_01.jpg`…`real_10.jpg`, headshot con licenza aperta da
+Wikimedia Commons, crediti in **`CREDITS.md`**) e 10 volti generati
+dall'IA (`ai_01.jpg`…`ai_10.jpg`, StyleGAN2 via thispersondoesnotexist.com).
+È pensato per farti partire subito, non per essere definitivo: prima di
+usarlo in aula, dagli un'occhiata e valuta se aggiungere le tue immagini.
+
+Tutto è descritto dal file **`images.json`**:
 
 ```json
 [
-  { "file": "placeholder1.svg", "isAI": false, "note": "Nota opzionale mostrata alla rivelazione." },
-  { "file": "placeholder5.svg", "isAI": true,  "note": "Spiega perché è generata dall'IA, se vuoi." }
+  {
+    "file": "real_01.jpg",
+    "isAI": false,
+    "note": "Nota opzionale mostrata alla rivelazione.",
+    "credit": "Foto di Nome — Licenza — Fonte (opzionale, mostrato in-game)"
+  },
+  {
+    "file": "ai_01.jpg",
+    "isAI": true,
+    "note": "Spiega perché è generata dall'IA, se vuoi."
+  },
+  {
+    "file": "clip_01.mp4",
+    "isAI": false,
+    "type": "video",
+    "note": "Anche i video sono supportati (mp4/webm)."
+  }
 ]
 ```
 
-Per usare le tue immagini:
+Per usare le tue immagini (o video):
 
-1. Copia i tuoi file immagine (jpg/png/webp) dentro la cartella `images/`.
-2. Modifica `images.json`: per ogni immagine indica `file` (il nome del
-   file), `isAI` (`true` se generata dall'IA, `false` se è una foto reale)
-   e, se vuoi, una `note` che verrà mostrata durante la rivelazione (utile
-   per spiegare agli studenti cosa l'ha tradita, o da dove viene la foto).
+1. Copia i tuoi file (jpg/png/webp per le foto, mp4/webm per i video)
+   dentro la cartella `images/`.
+2. Modifica `images.json`: per ogni voce indica `file` (il nome del
+   file), `isAI` (`true` se generata dall'IA, `false` se è reale),
+   `type: "video"` se è una clip video (altrimenti viene trattata come
+   immagine), e opzionalmente `note` (mostrata alla rivelazione, utile
+   per spiegare cosa l'ha tradita) e `credit` (per dare credito alla
+   fonte, se richiesto dalla licenza).
 3. Puoi aggiungerne quante ne vuoi: l'host mescola automaticamente tutte
-   le immagini elencate in `images.json` a inizio partita.
-4. Ricorda di caricare anche le nuove immagini quando pubblichi il sito
+   le voci elencate in `images.json` a inizio partita.
+4. Ricorda di caricare anche i nuovi file quando pubblichi il sito
    (con `git add`/`git push`, oppure ritrascinando la cartella su
    Netlify Drop).
+
+**Attenzione al copyright**: se aggiungi foto/video trovati online,
+assicurati di averne il diritto d'uso (licenza libera con attribuzione
+tramite `credit`, oppure materiale tuo). Non pubblicare contenuti protetti
+senza permesso.
 
 ---
 
@@ -228,7 +257,7 @@ RealOrAI/
 ├── player.html             Pagina giocatore (mobile/iPad)
 ├── firebase-config.js       ⚠️ L'UNICO file da modificare (chiavi Firebase)
 ├── images.json               Elenco immagini + risposta corretta
-├── images/                    Immagini di gioco (placeholder inclusi)
+├── images/                    Immagini di gioco (set di partenza incluso)
 ├── css/
 │   ├── common.css             Stili condivisi
 │   ├── host.css                Stili schermo host (alto contrasto)
@@ -239,7 +268,8 @@ RealOrAI/
 │   ├── scoring.js                 Logica punteggio condivisa
 │   ├── host.js                     Macchina a stati dell'host
 │   └── player.js                    Logica client giocatore
-└── README.md
+├── README.md
+└── CREDITS.md                 Crediti/licenze delle immagini incluse
 ```
 
 ---
