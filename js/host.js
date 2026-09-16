@@ -40,11 +40,73 @@ let timerInterval = null;
 let lastRenderedStatus = null;
 
 // ---------------------------------------------------------------------------
+// Scoperta contenuti: legge tutto quello che trova nelle cartelle
+// images/real/ e images/fake/, senza bisogno di un elenco scritto a mano.
+// Basta numerare i file in ordine (1, 2, 3, ...): jpg/jpeg/png/webp/gif
+// per le foto, mp4/webm/mov per i video.
+// ---------------------------------------------------------------------------
+
+const MEDIA_EXTENSIONS = [
+  ["jpg", "image"],
+  ["jpeg", "image"],
+  ["png", "image"],
+  ["webp", "image"],
+  ["gif", "image"],
+  ["mp4", "video"],
+  ["webm", "video"],
+  ["mov", "video"],
+];
+const MEDIA_SCAN_MAX_INDEX = 300;
+const MEDIA_SCAN_MAX_MISSES = 3;
+
+async function urlExists(url) {
+  try {
+    const res = await fetch(url, { method: "HEAD", cache: "no-store" });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+async function probeIndex(folder, index) {
+  const checks = MEDIA_EXTENSIONS.map(async ([ext, type]) => {
+    const file = `${folder}/${index}.${ext}`;
+    return (await urlExists(`images/${file}`)) ? { file, type } : null;
+  });
+  const results = await Promise.all(checks);
+  return results.find((r) => r) || null;
+}
+
+async function scanFolder(folder, isAI) {
+  const found = [];
+  let misses = 0;
+  for (let i = 1; i <= MEDIA_SCAN_MAX_INDEX && misses < MEDIA_SCAN_MAX_MISSES; i++) {
+    const hit = await probeIndex(folder, i);
+    if (hit) {
+      found.push({ file: hit.file, type: hit.type, isAI });
+      misses = 0;
+    } else {
+      misses++;
+    }
+  }
+  return found;
+}
+
+async function loadAllMedia() {
+  const [real, fake] = await Promise.all([
+    scanFolder("real", false),
+    scanFolder("fake", true),
+  ]);
+  return [...real, ...fake];
+}
+
+// ---------------------------------------------------------------------------
 // Avvio: crea una nuova stanza oppure riprende quella salvata in localStorage
 // ---------------------------------------------------------------------------
 
 async function init() {
-  IMAGES = await fetch("images.json").then((r) => r.json());
+  el("topbar-status").textContent = "Carico i contenuti…";
+  IMAGES = await loadAllMedia();
 
   const saved = loadHostSession();
   if (saved) {
@@ -344,6 +406,13 @@ el("start-game-btn").addEventListener("click", async () => {
   clearLobbyError();
   const settings = roomState.settings;
 
+  if (IMAGES.length === 0) {
+    showLobbyError(
+      "Nessuna foto/video trovato in images/real/ o images/fake/. Aggiungi almeno una foto reale e una AI, numerate a partire da 1 (vedi README.md)."
+    );
+    return;
+  }
+
   if (settings.mode === "teams") {
     const teamCount = Object.values(roomState.entities || {}).filter(
       (e) => e.kind === "team"
@@ -525,10 +594,9 @@ function renderReveal() {
   const badge = el("reveal-badge");
   badge.textContent = img.isAI ? "IMMAGINE AI" : "FOTO REALE";
   badge.className = "reveal-badge " + (img.isAI ? "ai" : "real");
-  el("reveal-note").textContent = img.note || "";
-  const creditEl = el("reveal-credit");
-  creditEl.textContent = img.credit || "";
-  creditEl.classList.toggle("hidden", !img.credit);
+  el("reveal-note").textContent = img.isAI
+    ? "Immagine generata dall'IA."
+    : "Immagine reale.";
 
   const results =
     (roomState.rounds &&

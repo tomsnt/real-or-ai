@@ -194,57 +194,38 @@ gratuito in seguito se vuoi poter aggiornare lo stesso sito più volte).
 
 ## Sostituire le immagini
 
-Il progetto include già un primo set di partenza in `images/`: 10 foto
-reali (`real_01.jpg`…`real_10.jpg`, headshot con licenza aperta da
-Wikimedia Commons, crediti in **`CREDITS.md`**) e 10 volti generati
-dall'IA (`ai_01.jpg`…`ai_10.jpg`, StyleGAN2 via thispersondoesnotexist.com).
-È pensato per farti partire subito, non per essere definitivo: prima di
-usarlo in aula, dagli un'occhiata e valuta se aggiungere le tue immagini.
+Niente file da modificare a mano: il gioco pesca i contenuti direttamente
+da due cartelle, **`images/real/`** (foto/video veri) e **`images/fake/`**
+(foto/video generati dall'IA). All'apertura di `host.html`, il gioco
+"annusa" da solo cosa c'è dentro ciascuna cartella.
 
-Tutto è descritto dal file **`images.json`**:
+Il progetto include già un primo set di partenza: 10 foto reali in
+`images/real/` (headshot con licenza aperta da Wikimedia Commons, crediti
+in **`CREDITS.md`**) e 10 volti generati dall'IA in `images/fake/`
+(StyleGAN2 via thispersondoesnotexist.com). È pensato per farti partire
+subito, non per essere definitivo: prima di usarlo in aula, dagli
+un'occhiata e valuta se aggiungere le tue immagini.
 
-```json
-[
-  {
-    "file": "real_01.jpg",
-    "isAI": false,
-    "note": "Nota opzionale mostrata alla rivelazione.",
-    "credit": "Foto di Nome — Licenza — Fonte (opzionale, mostrato in-game)"
-  },
-  {
-    "file": "ai_01.jpg",
-    "isAI": true,
-    "note": "Spiega perché è generata dall'IA, se vuoi."
-  },
-  {
-    "file": "clip_01.mp4",
-    "isAI": false,
-    "type": "video",
-    "note": "Anche i video sono supportati (mp4/webm)."
-  }
-]
-```
+Per aggiungere (o sostituire del tutto) i contenuti:
 
-Per usare le tue immagini (o video):
-
-1. Copia i tuoi file (jpg/png/webp per le foto, mp4/webm per i video)
-   dentro la cartella `images/`.
-2. Modifica `images.json`: per ogni voce indica `file` (il nome del
-   file), `isAI` (`true` se generata dall'IA, `false` se è reale),
-   `type: "video"` se è una clip video (altrimenti viene trattata come
-   immagine), e opzionalmente `note` (mostrata alla rivelazione, utile
-   per spiegare cosa l'ha tradita) e `credit` (per dare credito alla
-   fonte, se richiesto dalla licenza).
-3. Puoi aggiungerne quante ne vuoi: l'host mescola automaticamente tutte
-   le voci elencate in `images.json` a inizio partita.
+1. Vai nella cartella `images/real/` per i contenuti veri, o
+   `images/fake/` per quelli generati dall'IA.
+2. Copia lì dentro i tuoi file **numerandoli in ordine, a partire da 1**:
+   `1.jpg`, `2.jpg`, `3.png`, `4.mp4`, `5.webm`, ecc. (formati supportati:
+   jpg/jpeg/png/webp/gif per le foto, mp4/webm/mov per i video). Il numero
+   è solo un nome file: non conta l'ordine in cui appaiono in partita,
+   che viene sempre mescolato a caso.
+3. Puoi cancellare pure tutti quelli inclusi di default e mettere solo i
+   tuoi: basta che restino numerati senza troppi "buchi" consecutivi
+   (va benissimo saltare un numero ogni tanto, ma se lasci 3 numeri di
+   fila vuoti il gioco si ferma lì pensando che la cartella sia finita).
 4. Ricorda di caricare anche i nuovi file quando pubblichi il sito
    (con `git add`/`git push`, oppure ritrascinando la cartella su
    Netlify Drop).
 
 **Attenzione al copyright**: se aggiungi foto/video trovati online,
-assicurati di averne il diritto d'uso (licenza libera con attribuzione
-tramite `credit`, oppure materiale tuo). Non pubblicare contenuti protetti
-senza permesso.
+assicurati di averne il diritto d'uso (licenza libera, oppure materiale
+tuo). Non pubblicare contenuti protetti senza permesso.
 
 ---
 
@@ -256,8 +237,9 @@ RealOrAI/
 ├── host.html              Schermo condiviso (proiettore/TV)
 ├── player.html             Pagina giocatore (mobile/iPad)
 ├── firebase-config.js       ⚠️ L'UNICO file da modificare (chiavi Firebase)
-├── images.json               Elenco immagini + risposta corretta
-├── images/                    Immagini di gioco (set di partenza incluso)
+├── images/
+│   ├── real/                    Foto/video VERI (numerati 1, 2, 3, ...)
+│   └── fake/                    Foto/video generati dall'IA (numerati 1, 2, 3, ...)
 ├── css/
 │   ├── common.css             Stili condivisi
 │   ├── host.css                Stili schermo host (alto contrasto)
@@ -327,9 +309,10 @@ pagina host.
 
 **Voglio provare in locale prima di pubblicare.**
 Puoi aprire `host.html`/`player.html` direttamente con doppio click in
-molti browser, ma per caricare `images.json` alcuni browser richiedono che
-i file vengano serviti da un piccolo server locale (non serve installare
-nulla: il Mac ha già Python). Dalla cartella del progetto:
+molti browser, ma per cercare le foto/video dentro `images/real/` e
+`images/fake/` alcuni browser richiedono che i file vengano serviti da un
+piccolo server locale (non serve installare nulla: il Mac ha già Python).
+Dalla cartella del progetto:
 
 ```bash
 python3 -m http.server 8080
