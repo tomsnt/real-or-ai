@@ -16,11 +16,11 @@
 // ============================================================================
 
 export const firebaseConfig = {
-  apiKey: "INCOLLA_QUI_LA_TUA_apiKey",
-  authDomain: "INCOLLA_QUI_IL_TUO_authDomain",
-  databaseURL: "INCOLLA_QUI_IL_TUO_databaseURL", // es: https://TUO-PROGETTO-default-rtdb.europe-west1.firebasedatabase.app
-  projectId: "INCOLLA_QUI_IL_TUO_projectId",
-  storageBucket: "INCOLLA_QUI_IL_TUO_storageBucket",
-  messagingSenderId: "INCOLLA_QUI_IL_TUO_messagingSenderId",
-  appId: "INCOLLA_QUI_IL_TUO_appId",
+  apiKey: "AIzaSyCiNNzXExdjDCKoUiBVZ8J-C178brAjJj8",
+  authDomain: "ai-or-hi.firebaseapp.com",
+  databaseURL: "https://ai-or-hi-default-rtdb.firebaseio.com",
+  projectId: "ai-or-hi",
+  storageBucket: "ai-or-hi.firebasestorage.app",
+  messagingSenderId: "233304663477",
+  appId: "1:233304663477:web:42716281b7dbdbf1e7e5fc",
 };
